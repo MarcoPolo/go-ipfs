@@ -1,5 +1,10 @@
 module github.com/ipfs/go-ipfs
 
+replace (
+	github.com/libp2p/go-libp2p-resource-manager => ../../libp2p/go-libp2p-resource-manager
+	github.com/libp2p/go-libp2p-resource-manager/obs => ../../libp2p/go-libp2p-resource-manager/obs
+)
+
 require (
 	bazil.org/fuse v0.0.0-20200117225306-7b5117fecadc
 	contrib.go.opencensus.io/exporter/prometheus v0.4.0
