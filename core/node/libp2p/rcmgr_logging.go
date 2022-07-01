@@ -11,6 +11,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/protocol"
 	rcmgr "github.com/libp2p/go-libp2p-resource-manager"
+	"github.com/multiformats/go-multiaddr"
 	"go.uber.org/zap"
 )
 
@@ -88,8 +89,8 @@ func (n *loggingResourceManager) ViewPeer(p peer.ID, f func(network.PeerScope) e
 		return f(&loggingScope{logger: n.logger, delegate: s, countErrs: n.countErrs})
 	})
 }
-func (n *loggingResourceManager) OpenConnection(dir network.Direction, usefd bool) (network.ConnManagementScope, error) {
-	connMgmtScope, err := n.delegate.OpenConnection(dir, usefd)
+func (n *loggingResourceManager) OpenConnection(dir network.Direction, usefd bool, endpoint multiaddr.Multiaddr) (network.ConnManagementScope, error) {
+	connMgmtScope, err := n.delegate.OpenConnection(dir, usefd, endpoint)
 	n.countErrs(err)
 	return connMgmtScope, err
 }
