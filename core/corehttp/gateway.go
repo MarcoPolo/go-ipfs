@@ -21,6 +21,8 @@ import (
 	config "github.com/ipfs/kubo/config"
 	core "github.com/ipfs/kubo/core"
 	"github.com/ipfs/kubo/core/node"
+	gostream "github.com/libp2p/go-libp2p-gostream"
+	p2phttp "github.com/libp2p/go-libp2p-http"
 	"github.com/libp2p/go-libp2p/core/routing"
 	id "github.com/libp2p/go-libp2p/p2p/protocol/identify"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
@@ -58,6 +60,9 @@ func GatewayOption(paths ...string) ServeOption {
 		for _, p := range paths {
 			mux.HandleFunc(p+"/", handler)
 		}
+
+		listener, _ := gostream.Listen(n.PeerHost, p2phttp.DefaultP2PProtocol)
+		go http.Serve(listener, mux)
 
 		return mux, nil
 	}
