@@ -235,3 +235,5 @@ require (
 )
 
 go 1.18
+
+replace github.com/libp2p/go-libp2p => github.com/libp2p/go-libp2p v0.27.1-0.20230411013033-2d1702f52dc5
